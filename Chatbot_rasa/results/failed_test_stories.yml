@@ -1,0 +1,47 @@
+version: "2.0"
+stories:
+- story: happy path 1 (C:\Users\prash\AppData\Local\Temp\tmpqktpwf98\8be60e5746bd4fe5a583d3dc4ad0917e_test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_listen
+  - intent: mood_great  # predicted: greet: amazing
+  - action: utter_happy  # predicted: action_listen
+- story: happy path 2 (C:\Users\prash\AppData\Local\Temp\tmpqktpwf98\8be60e5746bd4fe5a583d3dc4ad0917e_test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_listen
+  - intent: mood_great  # predicted: greet: amazing
+  - action: utter_happy  # predicted: action_listen
+  - intent: goodbye
+  - action: utter_goodbye
+- story: sad path 1 (C:\Users\prash\AppData\Local\Temp\tmpqktpwf98\8be60e5746bd4fe5a583d3dc4ad0917e_test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_listen
+  - intent: mood_unhappy  # predicted: goodbye: not good
+  - action: utter_cheer_up  # predicted: action_default_fallback
+  - action: utter_did_that_help  # predicted: action_listen
+  - intent: affirm
+  - action: utter_happy  # predicted: utter_what_else
+- story: sad path 2 (C:\Users\prash\AppData\Local\Temp\tmpqktpwf98\8be60e5746bd4fe5a583d3dc4ad0917e_test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_listen
+  - intent: mood_unhappy  # predicted: goodbye: not good
+  - action: utter_cheer_up  # predicted: action_default_fallback
+  - action: utter_did_that_help  # predicted: action_listen
+  - intent: deny
+  - action: utter_goodbye  # predicted: action_default_fallback
+- story: sad path 3 (C:\Users\prash\AppData\Local\Temp\tmpqktpwf98\8be60e5746bd4fe5a583d3dc4ad0917e_test_stories.yml)
+  steps:
+  - intent: greet
+  - action: utter_greet  # predicted: action_listen
+  - intent: mood_unhappy  # predicted: nlu_fallback: very terrible
+  - action: utter_cheer_up  # predicted: action_default_fallback
+  - action: utter_did_that_help  # predicted: action_listen
+  - intent: deny
+  - action: utter_goodbye  # predicted: action_default_fallback
+- story: bot challenge (C:\Users\prash\AppData\Local\Temp\tmpqktpwf98\8be60e5746bd4fe5a583d3dc4ad0917e_test_stories.yml)
+  steps:
+  - intent: bot_challenge  # predicted: goodbye: are you a bot?
+  - action: utter_iamabot

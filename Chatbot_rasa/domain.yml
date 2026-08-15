@@ -1,0 +1,214 @@
+version: "2.0"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - placesinkathmandu
+  - HerritageSites
+  - pokhara
+  - bunjeejumping
+  - basantapur
+  - Nepal
+  - Activities_to_do_nepal
+  - adventure_things_nepal
+  - pashupatinath_temple_famous_for
+  - best_time_to_visit
+  - how_to_enter_nepal
+  - nepal_safe
+  - Trek_first_time
+  - what_can_i_take_home
+  - ATM_in_nepal
+  - any_tourist_police
+  - days_to_spend
+  - budget_friendly_places
+
+responses:
+  utter_greet:
+  - text: "Hey! how can i help you"
+
+  utter_what_else:
+  - text: "What else do you wanna know ?"
+
+  utter_did_that_help:
+  - text: "Did that help you ?"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_herritagesites:
+  - text: "Kathmandu Valley"
+
+  utter_herritagesites2:
+  - text: "Lumbini"
+
+  utter_herritagesites3:
+  - text: "Boudha Stupa"
+
+  utter_kathmandu:
+  - text: "Pashupatinath Temple"
+
+  utter_kathmandu2:
+  - text: "Swayambhunath Stupa"
+
+  utter_kathmandu3:
+  - text: "Narayanhiti Palace"
+
+  utter_pokhara:
+  - text: "Devi's Falls"
+
+  utter_pokhara2:
+  - text: "Phewa Lake"
+
+  utter_pokhara3:
+  - text: "Gupteshwor Mahadev Cave"
+
+  utter_pokhara4:
+  - text: "Begnas Lake"
+
+  utter_bunjee:
+  - text: "Bhote Koshi Gorge"
+
+  utter_bunjee2:
+  - text: "Hemja, Pokhara"
+
+  utter_basantapur:
+  - text: "Its in Kathmandu"
+
+  utter_nepal:
+  - text: "Nepal is landlocked country located in southern Asia couched between two Asian giants India and China."
+
+  utter_nepal2:
+  - text: "The capital city of the country is Kathmandu, commonly known as city of temples where we can explore traditional artistic beauty."
+
+  utter_activities_to_do_nepal:
+  - text: "Everest Base Camp Trek"
+
+  utter_activities_to_do_nepal2:
+  - text: "Wildlife Safari at Chitwan National Park."
+
+  utter_activities_to_do_nepal3:
+  - text: "Boating in Phewa Tal Lake."
+
+  utter_activities_to_do_nepal4:
+  - text: "River Rafting in Upper Seti River."
+
+  utter_adventure_things_nepal:
+  - text: "Go for Paramotoring"
+
+  utter_adventure_things_nepal1:
+  - text: "Take a UltraLight Flight Experience in Pokhara"
+
+  utter_adventure_things_nepal2:
+  - text: "Hot Air Balloon Ride over Mount Everest."
+
+  utter_adventure_things_nepal3:
+  - text: "Elephant Polo."  
+
+  utter_pashupatinath_temple_famous_for:
+  - text: "Dedicated to Lord Shiva, Pashupatinath is one of the four most important religious sites in Asia for devotees of Shiva. Built in the 5th century and later renovated by Malla kings, the site itself is said to have existed from the beginning of the millennium when a Shiva lingam was discovered here."
+
+  utter_best_time_to_visit:
+  - text: " peak seasons for trekking are the spring (Mar to May) and the fall (Sep to Nov)"
+
+  utter_best_time_to_visit1:
+  - text: " Winter (Dec to Feb) and summer (Jun to Aug) months are also great times to visit"
+
+  utter_best_time_to_visit2:
+  - text: " For Exploring Chitwan (Nepal's southern jungle region), winter is the best time to visit when the temperatures are pleasant and the foliage less dense to allow for better wildlife sightings."
+
+  utter_how_to_enter_nepal:
+  - text: "You can enter Nepal through airways:"
+
+  utter_how_to_enter_nepal_air1:
+  - text: " Royal Nepal Airlines"
+
+  utter_how_to_enter_nepal_air2:
+  - text: " British Airways"
+
+  utter_how_to_enter_nepal_air3:
+  - text: " China South West Airlines"
+
+  utter_how_to_enter_nepal_air4:
+  - text: " India Air"
+
+  utter_nepal_safe:
+  - text: "Absolutely Nepal is safe for traveler. Firstly, Nepal is considered as one of the peaceful countries in the world "
+
+  utter_nepal_safe2:
+  - text: "Secondly, all the peoples will help you if you are stuck in some kind of trouble, We respect our travellers."
+
+  utter_Trek_first_time:
+  - text: "Absolutely, you can do trekking. Its not that hard"
+
+  utter_Trek_first_time2:
+  - text: "You can beginn with normal and slow trekking and then after you gain some experience you can move to hard ones."
+
+  utter_what_can_i_take_home:
+  - text: "Actually there are so many things to take back home depending on your personnel choice Like:"
+
+  utter_what_can_i_take_home2:
+  - text: "Handicraft materials."
+
+  utter_what_can_i_take_home3:
+  - text: " Nepalese art and craft."
+
+  utter_what_can_i_take_home4:
+  - text: "Nepali musical instruments"
+
+  utter_what_can_i_take_home5:
+  - text: " Nepali carpets." 
+
+  utter_ATM_in_nepal:
+  - text: " There are many ATM machines in the Kathmandu and Pokhara Valley." 
+
+  utter_ATM_in_nepal2:
+  - text: " Most popular cards accepted in Nepal are VISA, MASTERCARD and American Express."
+
+  utter_any_tourist_police:
+  - text: " Of course there is tourist police located near the Nepal Tourism Development Board's Office."
+
+  utter_any_tourist_police2:
+  - text: " Also, there are complaint counters at the airport and Basantapur Durbar Square."
+
+  utter_days_to_spend:
+  - text: " If you're mainly looking to experience Nepal's cultural and natural highlights, you can have a great experience in 5-7 days, where you can visit two regions (likely, Pokhara and Kathmandu)."
+
+  utter_days_to_spend2:
+  - text: " To get into the Himalaya on a multi-day trek, you'll want at least 10 days to have enough time to reach higher altitudes and safely acclimatize."
+
+  utter_days_to_spend3:
+  - text: " To undertake one of the longer, classic treks in Nepal or to combine multiple regions and activities into one visit, 14-20 days is ideal."
+
+  utter_budget_friendly_places:
+  - text: " With low budget you can do many things like:"
+
+  utter_budget_friendly_places2:
+  - text: " Everest Trekking"
+
+  utter_budget_friendly_places3:
+  - text: " Annapurna Trekking."
+
+  utter_budget_friendly_places4:
+  - text: " Kathmandu valley Sightseeing."
+
+  utter_budget_friendly_places5:
+  - text: " Pokhara Valley Sightseeing"
+
+  utter_budget_friendly_places6:
+  - text: " Chitwan National Park"
+
+
+
+      
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

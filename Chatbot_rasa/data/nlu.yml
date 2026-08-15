@@ -1,0 +1,175 @@
+version: "2.0"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - Nameste
+    - Jojolapa
+    - Sup
+    - wassup
+
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day   
+    - see you around
+    - bye bye
+    - see you later
+    - cya
+    - ciao.
+    - nothing
+    - sayonara
+    - later
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - oh i see
+    - agreed
+
+- intent: deny
+  examples: |
+    - no
+    - na
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+
+- intent: placesinkathmandu
+  examples: |
+    - places to visit in kathmandu
+    - areas to visit in kathmandu
+    - popular places in ktm
+
+- intent: HerritageSites
+  examples: |
+    - list of heritage sites
+    - some of heritage sites
+    - Heritage sites in Nepal
+
+- intent: basantapur
+  examples: |
+    - where is basantapur?
+    - how to go basantapur?
+    - about basatapur
+
+- intent: bunjeejumping
+  examples: |
+    - where can i go for bunjeejumping
+    - place to jump
+    - best place to bunjee
+
+- intent: pokhara
+  examples: |
+    - places to visit in pokhara
+    - areas to visit in pokhara
+    - popular places in pokhara
+
+- intent: Nepal
+  examples: |
+    - Where is Nepal?
+
+- intent: Activities_to_do_nepal
+  examples: |
+    - What activities can be done in nepal?
+    - What else can i do in nepal?
+
+- intent: adventure_things_nepal
+  examples: |
+    - Adventure things that can be done in nepal?
+    - where can i adventure in nepal?
+    - what adventure things can i do in nepal?
+
+- intent: pashupatinath_temple_famous_for
+  examples: |
+    - what is pashupatinath temple famous for?
+    - Why pashupatinath temple is famouse?
+    - Reason for why pashupatinath temple is famouse?
+    - famouse pashupatinath temple
+
+- intent: best_time_to_visit
+  examples: |
+    - When's the best time to visit Nepal?
+    - Suitable time to visit nepal
+    - when to visit nepal?
+    - when should i visit nepal for best experience?
+
+- intent: how_to_enter_nepal
+  examples: |
+    - How to come in nepal?
+    - How do i visit nepal?
+    - What medium should i use to come nepal?
+    - Any suggestions how to come in nepal? 
+
+- intent: nepal_safe
+  examples: |
+    - Is Nepal safe?
+    - Is a woman traveling alone safe in your country?
+    - How secure is nepal?
+    - Are tourists secure while visiting nepal? 
+
+- intent: Trek_first_time
+  examples: |
+    - Can I trek in the Himalayas even if I haven't done any trekking before
+    - Can i trek?
+    - Even though i am a beginner can i trek?
+    - how difficult id trekking?
+
+- intent: what_can_i_take_home
+  examples: |
+    - What can i take in Nepal?
+    - what is there to buy in Nepal to take back home?
+    - What to buy?
+    - Worth buying things in nepal?
+
+- intent: ATM_in_nepal
+  examples: |
+    - Are there any ATM in nepal?
+    - What cards they accepts?
+    - ATM in nepal
+    - places to withdraw cash?
+
+- intent: any_tourist_police
+  examples: |
+    - any tourist police to contact?
+    - where can u find tourist police?
+    - how to reach to tourist police?
+    - where can i contact tourist police?
+
+- intent: days_to_spend
+  examples: |
+    - How many days should i spend in nepal?
+    - time to spend in nepal?
+    - how long should i stay in nepal?
+
+- intent: budget_friendly_places
+  examples: |
+    - Where can i visit with low budget?
+    - Best Shoestring trips in nepal
+    - with certain budget where can i visit?

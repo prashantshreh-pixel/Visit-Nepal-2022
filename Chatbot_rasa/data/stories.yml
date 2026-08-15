@@ -1,0 +1,168 @@
+version: "2.0"
+
+stories:
+
+- story: happy path
+  steps:
+  - action: utter_greet
+  - intent: greet
+  - intent: mood_great
+
+- story: placesinkathmandu
+  steps:
+  - intent: placesinkathmandu
+  - action: utter_kathmandu
+  - action: utter_kathmandu2
+  - action: utter_kathmandu3
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_what_else
+
+- story: HerritageSites
+  steps:
+  - intent: HerritageSites
+  - action: utter_herritagesites
+  - action: utter_herritagesites2
+  - action: utter_herritagesites2
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_what_else
+
+- story: pokhara
+  steps:
+  - intent: pokhara
+  - action: utter_pokhara
+  - action: utter_pokhara2
+  - action: utter_pokhara3
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_what_else
+
+- story: bunjee
+  steps:
+  - intent: bunjeejumping
+  - action: utter_bunjee
+  - action: utter_bunjee2
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_what_else
+
+- story: basantapur
+  steps:
+  - intent: basantapur
+  - action: utter_basantapur
+
+- story: Nepal
+  steps:
+  - intent: Nepal
+  - action: utter_nepal
+  - action: utter_nepal2
+  - intent: affirm
+  - action: utter_what_else
+
+- story: Activities_to_do_nepal
+  steps:
+  - intent: Activities_to_do_nepal
+  - action: utter_activities_to_do_nepal
+  - action: utter_activities_to_do_nepal2
+  - action: utter_activities_to_do_nepal3
+  - action: utter_activities_to_do_nepal4
+  - intent: affirm
+  - action: utter_what_else
+
+- story: adventure_things_nepal
+  steps:
+  - intent: adventure_things_nepal
+  - action: utter_adventure_things_nepal
+  - action: utter_adventure_things_nepal2
+  - action: utter_adventure_things_nepal3
+  - intent: affirm
+  - action: utter_what_else
+
+- story: best_time_to_visit
+  steps:
+  - intent: best_time_to_visit
+  - action: utter_best_time_to_visit
+  - action: utter_best_time_to_visit1
+  - action: utter_best_time_to_visit2
+  - intent: affirm
+  - action: utter_what_else
+
+- story: pashupatinath_temple_famous_for
+  steps:
+  - intent: pashupatinath_temple_famous_for
+  - action: utter_pashupatinath_temple_famous_for
+  - intent: affirm
+  - action: utter_what_else
+
+- story: how_to_enter_nepal
+  steps:
+  - intent: how_to_enter_nepal
+  - action: utter_how_to_enter_nepal
+  - action: utter_how_to_enter_nepal_air1
+  - action: utter_how_to_enter_nepal_air2
+  - action: utter_how_to_enter_nepal_air3
+  - action: utter_how_to_enter_nepal_air4
+  - intent: affirm
+  - action: utter_what_else
+
+- story: nepal_safe
+  steps:
+  - intent: nepal_safe
+  - action: utter_nepal_safe
+  - action: utter_nepal_safe2
+  - intent: affirm
+
+- story: Trek_first_time
+  steps:
+  - intent: Trek_first_time
+  - action: utter_Trek_first_time
+  - action: utter_Trek_first_time2
+  - intent: affirm
+
+- story: what_can_i_take_home
+  steps:
+  - intent: what_can_i_take_home
+  - action: utter_what_can_i_take_home
+  - action: utter_what_can_i_take_home2
+  - action: utter_what_can_i_take_home3
+  - action: utter_what_can_i_take_home4
+  - action: utter_what_can_i_take_home5
+  - intent: affirm
+
+- story: ATM_in_nepal
+  steps:
+  - intent: ATM_in_nepal
+  - action: utter_ATM_in_nepal
+  - action: utter_ATM_in_nepal2
+  - intent: affirm
+  - action: utter_what_else
+
+- story: any_tourist_police
+  steps:
+  - intent: any_tourist_police
+  - action: utter_any_tourist_police
+  - action: utter_any_tourist_police2
+  - intent: affirm
+  - action: utter_what_else
+
+- story: days_to_spend
+  steps:
+  - intent: days_to_spend
+  - action: utter_days_to_spend
+  - action: utter_days_to_spend2
+  - action: utter_days_to_spend3
+  - intent: affirm
+  - action: utter_what_else
+
+- story: budget_friendly_places
+  steps:
+  - intent: budget_friendly_places
+  - action: utter_budget_friendly_places
+  - action: utter_budget_friendly_places2
+  - action: utter_budget_friendly_places3
+  - action: utter_budget_friendly_places4
+  - action: utter_budget_friendly_places5
+  - action: utter_budget_friendly_places6
+  - intent: affirm
+  - action: utter_what_else

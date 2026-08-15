@@ -1,0 +1,47 @@
+{%extends 'base.html'%} {% load static %} {% block content %}
+<link rel="stylesheet" href="/static/css/pages.css" />
+<style>
+  body {
+    background-color: #ffffff;
+    /* background: linear-gradient(to top, #ffffff, transparent); */
+  }
+  #background {
+    background-image: url("/static/images/culture.jpg");
+    height: 100vh;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+</style>
+
+<div class="culture_titles">
+  <h1><p>Culture</p></h1>
+</div>
+<section id="project" class="pb-5">
+  <div class="container my-5 py-5">
+    <div class="row">
+      <h4 style="color: Black; padding-bottom: 50px; font-size: 40px">
+        Popular cultures.
+      </h4>
+      {% for post in posts %}
+      <div class="col-md-6 col-sm-6">
+        <div class="project-item">
+          <a href="/post?id={{post.id}}">
+            <img src="{{post.image.url}}" class="image-fluid" />
+            <div class="project-overlay">
+              <div class="project-info">
+                <h1>{{post.title}}</h1>
+                <h4 class="text-center px-5 my-5">
+                  {{post.description | truncatewords:30}}
+                </h4>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

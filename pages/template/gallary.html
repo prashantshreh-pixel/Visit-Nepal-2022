@@ -1,0 +1,38 @@
+{%extends 'base.html'%} {% load static %}{%block content%}
+<link rel="stylesheet" href="/static/css/pages2.css" />
+<style>
+  body {
+    background-color: rgba(52, 58, 64, 0.76);
+  }
+  .gallary {
+    color: white;
+    font-size: 3em;
+    margin-bottom: 40px;
+  }
+</style>
+<div class="container-fluid px-5 my-5">
+  <div class="sliding-background">
+    <div class="box">
+      <h5 class="gallary text-center">Popular uploads.</h5>
+      <div class="row no-gutters">
+        {% for data in querydata %}
+        <div class="col-md-2" style="margin: 10px">
+          <div class="card-group">
+            <div class="card">
+              <img src="{{data.file.url}}" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">Title: {{data.title}}</h5>
+                <p class="card-text">Description: {{data.description}}</p>
+                <p class="card-text">
+                  <small class="text-muted">Location: {{data.location}}</small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock content %}

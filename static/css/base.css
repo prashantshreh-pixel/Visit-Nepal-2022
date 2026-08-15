@@ -1,0 +1,69 @@
+/* Adding new font */
+@font-face {
+  font-family: PTSans-BoldItalic;
+  src: url("/static/fonts/PTSans-BoldItalicttff");
+}
+@font-face {
+  font-family: great_wishes;
+  src: url("/static/fonts/Great Wishes.otf");
+}
+/* Giving universal padding and margin as 0 */
+* {
+  padding: 0;
+  margin: 0;
+}
+/* Big font title page */
+.Explore {
+  font-family: great_wishes;
+  letter-spacing: 15px;
+  text-shadow: 7px 7px #333300;
+  opacity: 0.9;
+  position: absolute;
+  top: 45%;
+  left: 37%;
+  color: white;
+  font-weight: bold;
+  -webkit-transform: rotate(-25.5deg);
+}
+/* Styling Navagation bar. */
+.navbar .navbar-brand {
+  position: relative;
+  font-family: "PT Sans", sans-serif;
+  font-weight: normal;
+  font-size: 45px;
+  color: #ffffff !important;
+  padding-top: 5%;
+}
+.navbar .navbar-nav .nav-link {
+  font-family: "PT Sans", sans-serif;
+  font-weight: normal;
+  letter-spacing: 1px;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all-ease-in 0.4s;
+  color: #ffffff !important;
+}
+
+/* adding hover effect. */
+.navbar .navbar-nav .nav-link:hover {
+  background: transparent;
+  color: #fff;
+}
+.navbar .navbar-nav .nav-link::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: transparent;
+  transition: width 0.3s ease, background-color 0.3 ease;
+}
+.navbar .navbar-nav .nav-link:hover::after {
+  width: 100%;
+  background: #fff;
+  color: #fff;
+}
+/* to make fluid background image */
+.img-fluid {
+  @include img-fluid;
+}
