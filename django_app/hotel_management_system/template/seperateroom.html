@@ -1,0 +1,337 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .room-page-wrapper {
+    background: var(--bg-body);
+    min-height: 100vh;
+    padding-top: 110px;
+    padding-bottom: 80px;
+  }
+
+  .room-breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .btn-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-accent) !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-back-link:hover {
+    transform: translateX(-4px);
+  }
+
+  /* Room Card */
+  .room-detail-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease;
+  }
+
+  .room-detail-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .room-img-box {
+    position: relative;
+    height: 260px;
+    overflow: hidden;
+  }
+
+  .room-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .room-detail-card:hover .room-img-box img {
+    transform: scale(1.05);
+  }
+
+  .room-num-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .room-price-tag {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: var(--primary-accent);
+    color: #ffffff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .room-info-body {
+    padding: 1.8rem;
+  }
+
+  .spec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-body);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    margin-right: 8px;
+    margin-bottom: 10px;
+  }
+
+  /* Sticky Booking Card */
+  .sticky-booking-card {
+    position: sticky;
+    top: 100px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    box-shadow: var(--card-shadow);
+    padding: 2.2rem;
+  }
+
+  .booking-card-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group-custom {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group-custom label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .form-control-custom {
+    width: 100%;
+    padding: 10px 16px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 16px;
+    background: var(--bg-body);
+    color: var(--text-color);
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-control-custom:focus {
+    border-color: var(--primary-accent);
+  }
+
+  .btn-confirm-booking {
+    width: 100%;
+    background: linear-gradient(135deg, #e65100, #ff9800);
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(230, 81, 0, 0.4);
+    transition: all 0.25s ease;
+    margin-top: 0.5rem;
+  }
+
+  .btn-confirm-booking:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(230, 81, 0, 0.6);
+  }
+</style>
+
+<div class="room-page-wrapper">
+  <div class="container">
+    
+    <!-- Top Navigation Bar -->
+    <div class="room-breadcrumb-nav">
+      <a href="{% url 'hms:room_cat' %}" class="btn-back-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>All Room Categories</span>
+      </a>
+      <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold">
+        {{ category.Category }} Collection
+      </span>
+    </div>
+
+    <div class="row g-4">
+      
+      <!-- Left Column: Available Rooms List -->
+      <div class="col-lg-7 col-md-12">
+        <h3 class="fw-bold mb-4" style="color: var(--text-color);">
+          Available {{ category.Category }} Rooms ({{ rooms|length }})
+        </h3>
+
+        {% for r in rooms %}
+        <div class="room-detail-card">
+          <div class="room-img-box">
+            {% if r.image %}
+            <img src="{{ r.image.url }}" alt="Room {{ r.Room_number }}" />
+            {% else %}
+            <img src="{% static 'images/Normal_home.jpg' %}" alt="Room {{ r.Room_number }}" />
+            {% endif %}
+            <span class="room-num-badge"><i class="fa-solid fa-door-open me-1 text-warning"></i>Room #{{ r.Room_number }}</span>
+            <span class="room-price-tag">NPR {{ r.Price }} <small style="font-size:0.75rem; font-weight:normal;">/ night</small></span>
+          </div>
+
+          <div class="room-info-body">
+            <h4 class="fw-bold mb-2" style="color: var(--text-color);">
+              {{ category.Category }} Suite — Room {{ r.Room_number }}
+            </h4>
+            <p class="text-muted small mb-3">{{ r.description }}</p>
+
+            <div class="mb-3">
+              <span class="spec-badge"><i class="fa-solid fa-bed text-warning"></i> {{ r.Beds }} Bed{% if r.Beds > 1 %}s{% endif %}</span>
+              <span class="spec-badge"><i class="fa-solid fa-user-group text-warning"></i> Up to {{ r.Capacity }} Guest{% if r.Capacity > 1 %}s{% endif %}</span>
+              <span class="spec-badge"><i class="fa-solid fa-wifi text-warning"></i> Free Wi-Fi</span>
+              <span class="spec-badge"><i class="fa-solid fa-snowflake text-warning"></i> AC / Heating</span>
+            </div>
+
+            <button type="button" class="btn btn-outline-warning btn-sm rounded-pill px-3" onclick="selectRoom('{{ r.id }}', '{{ r.Room_number }}', '{{ r.Price }}')">
+              <i class="fa-solid fa-check me-1"></i>Select Room #{{ r.Room_number }}
+            </button>
+          </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-5 text-muted">
+          <i class="fa-solid fa-hotel fa-3x mb-3 opacity-50"></i>
+          <h4>No rooms currently listed in this category.</h4>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Right Column: Booking Reservation Form Card -->
+      <div class="col-lg-5 col-md-12">
+        <div class="sticky-booking-card">
+          <div class="booking-card-header">
+            <h4 class="fw-bold mb-1" style="color: var(--text-color);">Reserve Your Stay</h4>
+            <p class="small text-muted mb-0">Instant confirmation & best rates guaranteed</p>
+          </div>
+
+          <form method="POST" action="">
+            {% csrf_token %}
+            
+            <!-- Room Selection Dropdown -->
+            <div class="form-group-custom">
+              <label for="roomSelect"><i class="fa-solid fa-hotel me-1 text-warning"></i>Select Room</label>
+              <select name="room_id" id="roomSelect" class="form-control-custom">
+                <option value="">Any Available {{ category.Category }} Room</option>
+                {% for r in rooms %}
+                <option value="{{ r.id }}">Room #{{ r.Room_number }} (NPR {{ r.Price }}/night)</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- Check-In Datetime -->
+            <div class="form-group-custom">
+              <label for="checkInInput"><i class="fa-solid fa-calendar-check me-1 text-warning"></i>Check-in Date & Time</label>
+              <input
+                type="datetime-local"
+                name="check_in"
+                id="checkInInput"
+                class="form-control-custom"
+                required
+              />
+            </div>
+
+            <!-- Check-Out Datetime -->
+            <div class="form-group-custom">
+              <label for="checkOutInput"><i class="fa-solid fa-calendar-xmark me-1 text-warning"></i>Check-out Date & Time</label>
+              <input
+                type="datetime-local"
+                name="check_out"
+                id="checkOutInput"
+                class="form-control-custom"
+                required
+              />
+            </div>
+
+            <div class="p-3 my-3 rounded-3" style="background: var(--bg-body); border: 1px dashed var(--border-color);">
+              <div class="d-flex justify-content-between small text-muted mb-1">
+                <span>Category Rate:</span>
+                <span class="fw-bold" style="color: var(--text-color);">{{ category.Category }} (x{{ category.rate }})</span>
+              </div>
+              <div class="d-flex justify-content-between small text-muted">
+                <span>Cancellation Policy:</span>
+                <span class="text-success fw-bold">Free cancellation 24h prior</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-confirm-booking">
+              <i class="fa-solid fa-credit-card me-2"></i>Confirm Reservation
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Helper to pre-select room from left cards
+  function selectRoom(roomId, roomNum, price) {
+    const select = document.getElementById('roomSelect');
+    if (select) {
+      select.value = roomId;
+      select.focus();
+    }
+  }
+
+  // Pre-fill default datetime-local values (Today and Tomorrow at 12:00)
+  document.addEventListener('DOMContentLoaded', () => {
+    const checkIn = document.getElementById('checkInInput');
+    const checkOut = document.getElementById('checkOutInput');
+
+    const now = new Date();
+    now.setHours(14, 0, 0, 0); // Check-in at 2 PM
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(12, 0, 0, 0); // Check-out at 12 PM
+
+    const formatDateTime = (date) => {
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    };
+
+    if (checkIn && !checkIn.value) checkIn.value = formatDateTime(now);
+    if (checkOut && !checkOut.value) checkOut.value = formatDateTime(tomorrow);
+  });
+</script>
+{% endblock content %}

@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .members-page-wrapper {
+    background: var(--bg-body);
+    min-height: 100vh;
+    padding-top: 110px;
+    padding-bottom: 80px;
+  }
+
+  .dashboard-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2.2rem;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+  }
+
+  .user-badge-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .user-large-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e65100, #ff9800);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    box-shadow: 0 6px 18px rgba(230, 81, 0, 0.35);
+  }
+
+  .profile-info-table td {
+    padding: 8px 12px;
+    color: var(--text-color);
+    border: none;
+  }
+
+  .profile-info-table td:first-child {
+    font-weight: 600;
+    color: var(--text-muted);
+    width: 35%;
+  }
+
+  .btn-gradient-pill {
+    background: linear-gradient(135deg, #e65100, #ff9800);
+    color: #ffffff !important;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 25px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 15px rgba(230, 81, 0, 0.3);
+  }
+
+  .btn-gradient-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(230, 81, 0, 0.5);
+  }
+
+  .booking-item-card {
+    background: var(--bg-body);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .booking-item-card.has-booking {
+    border-left: 5px solid var(--primary-accent);
+  }
+
+  .upload-photo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--card-shadow);
+  }
+
+  .upload-photo-img {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .upload-photo-body {
+    padding: 1.2rem;
+  }
+</style>
+
+<div class="members-page-wrapper">
+  <div class="container">
+    
+    <div class="row g-4">
+      
+      <!-- Left Column: User Profile & Hotel Bookings -->
+      <div class="col-lg-5 col-md-12">
+        
+        <!-- User Profile Card -->
+        <div class="dashboard-card">
+          <div class="user-badge-header">
+            <div class="user-large-avatar">{{ user.username|first|upper }}</div>
+            <div>
+              <h3 class="fw-bold mb-0" style="color: var(--text-color);">{{ user.username }}</h3>
+              <span class="text-warning small fw-bold">● Active Community Traveler</span>
+            </div>
+          </div>
+
+          <table class="table profile-info-table mb-4">
+            <tbody>
+              <tr>
+                <td>First Name:</td>
+                <td>{{ user.first_name|default:"Traveler" }}</td>
+              </tr>
+              <tr>
+                <td>Last Name:</td>
+                <td>{{ user.last_name|default:"Member" }}</td>
+              </tr>
+              <tr>
+                <td>Email:</td>
+                <td>{{ user.email }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex gap-2">
+            <a href="{% url 'hms:room_cat' %}" class="btn-gradient-pill w-100 justify-content-center">
+              <i class="fa-solid fa-hotel"></i> Explore Hotels
+            </a>
+          </div>
+        </div>
+
+        <!-- User Hotel Bookings Card -->
+        <div class="dashboard-card">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0" style="color: var(--text-color);">
+              <i class="fa-solid fa-calendar-check text-warning me-2"></i>Your Bookings ({{ booking|length }})
+            </h4>
+            <a href="{% url 'hms:room_cat' %}" class="btn btn-outline-warning btn-sm rounded-pill px-3">
+              + New Stay
+            </a>
+          </div>
+
+          {% for b in booking %}
+          <div class="booking-item-card has-booking">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="fw-bold mb-0 text-warning">
+                <i class="fa-solid fa-bed me-2"></i>{{ b.room.Category.Category }} Room #{{ b.room.Room_number }}
+              </h5>
+              <span class="badge bg-success rounded-pill px-3 py-1">Confirmed</span>
+            </div>
+            
+            <div class="small text-muted">
+              <div><i class="fa-solid fa-arrow-right-to-bracket text-success me-2"></i><strong>Check-in:</strong> {{ b.check_in|date:"M j, Y — g:i A" }}</div>
+              <div><i class="fa-solid fa-arrow-right-from-bracket text-danger me-2"></i><strong>Check-out:</strong> {{ b.check_out|date:"M j, Y — g:i A" }}</div>
+              <div><i class="fa-solid fa-tag text-warning me-2"></i><strong>Price:</strong> NPR {{ b.room.Price }} / night</div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="text-center py-4 text-muted">
+            <i class="fa-solid fa-hotel fa-2x mb-2 opacity-50"></i>
+            <p class="mb-3">You haven't booked any rooms yet.</p>
+            <a href="{% url 'hms:room_cat' %}" class="btn btn-warning btn-sm fw-bold rounded-pill px-4">
+              Browse Available Rooms
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+
+      <!-- Right Column: Upload Photo & Community Uploads -->
+      <div class="col-lg-7 col-md-12">
+        
+        <!-- Upload Form Card -->
+        <div class="dashboard-card">
+          <h4 class="fw-bold mb-3" style="color: var(--text-color);">
+            <i class="fa-solid fa-cloud-arrow-up text-warning me-2"></i>Share Your Travel Photo
+          </h4>
+          <p class="text-muted small mb-4">Post memorable photos from your Nepal journeys to the public community gallery.</p>
+
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label small fw-bold" style="color: var(--text-color);">Photo Title</label>
+                <input type="text" class="form-control rounded-pill px-3" name="title" placeholder="e.g. Sunrise at Sarangkot" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small fw-bold" style="color: var(--text-color);">Location</label>
+                <input type="text" class="form-control rounded-pill px-3" name="location" placeholder="e.g. Pokhara" required />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold" style="color: var(--text-color);">Select Photo File</label>
+              <input type="file" class="form-control rounded-3" name="photo" accept="image/*" required />
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label small fw-bold" style="color: var(--text-color);">Story / Description</label>
+              <textarea class="form-control rounded-3" name="description" rows="3" placeholder="Describe this breathtaking moment..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-gradient-pill">
+              <i class="fa-solid fa-paper-plane"></i> Publish to Community Gallery
+            </button>
+          </form>
+        </div>
+
+        <!-- User Uploads List -->
+        <div class="dashboard-card">
+          <h4 class="fw-bold mb-4" style="color: var(--text-color);">
+            <i class="fa-solid fa-images text-warning me-2"></i>Your Published Captures ({{ photoData|length }})
+          </h4>
+
+          <div class="row g-3">
+            {% for data in photoData %}
+            <div class="col-md-6">
+              <div class="upload-photo-card">
+                <img src="{{ data.file.url }}" class="upload-photo-img" alt="{{ data.title }}" />
+                <div class="upload-photo-body">
+                  <h5 class="fw-bold mb-1" style="color: var(--text-color);">{{ data.title }}</h5>
+                  <p class="small text-muted mb-2"><i class="fa-solid fa-location-dot text-warning me-1"></i>{{ data.location }}</p>
+                  <p class="small text-muted mb-3">{{ data.description|truncatewords:14 }}</p>
+                  
+                  <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                    <a href="{{ data.file.url }}" class="btn btn-outline-secondary btn-sm rounded-pill" download>
+                      <i class="fa-solid fa-download me-1"></i>Download
+                    </a>
+                    <form action="delete/" method="POST" class="d-inline">
+                      {% csrf_token %}
+                      <input type="hidden" value="{{ data.id }}" name="id" />
+                      <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill" onclick="return confirm('Delete this photo?')">
+                        <i class="fa-solid fa-trash me-1"></i>Delete
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-4 text-muted">
+              <p>No photos uploaded yet. Use the form above to share your first memory!</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

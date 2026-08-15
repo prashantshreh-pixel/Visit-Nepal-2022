@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .hotel-hero-section {
+    background: linear-gradient(rgba(18, 18, 18, 0.7), rgba(18, 18, 18, 0.85)), url("{% static 'images/delux room2.jpg' %}");
+    height: 45vh;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .hotel-hero-section h1 {
+    font-size: 3.4rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .hotel-cat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: var(--card-shadow);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hotel-cat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35);
+  }
+
+  .hotel-img-wrap {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .hotel-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .hotel-cat-card:hover .hotel-img-wrap img {
+    transform: scale(1.08);
+  }
+
+  .hotel-price-badge {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ff9800;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .hotel-card-body {
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .hotel-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.6rem;
+  }
+
+  .amenity-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-body);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-right: 6px;
+    margin-bottom: 8px;
+  }
+
+  .btn-book-cat {
+    margin-top: auto;
+    background: var(--primary-accent);
+    color: #ffffff !important;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+  }
+
+  .btn-book-cat:hover {
+    background: #ff9800;
+    color: #121212 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 152, 0, 0.4);
+  }
+</style>
+
+<!-- Hero Section -->
+<div class="hotel-hero-section">
+  <div>
+    <h1>Himalayan Hotel Stays</h1>
+    <p class="lead opacity-75">Comfortable lodging & luxury retreats for your Nepal adventure</p>
+  </div>
+</div>
+
+<!-- Main Room Categories Section -->
+<div class="container py-5 my-4">
+  <div class="text-center mb-5 col-md-8 mx-auto">
+    <span class="text-warning fw-bold text-uppercase" style="letter-spacing: 3px; font-size: 0.88rem;">Select Your Comfort</span>
+    <h2 class="fw-bold mt-1 mb-3" style="color: var(--text-color);">Explore Room Collections</h2>
+    <p class="text-muted">Choose from standard traveler rooms, deluxe family suites, or luxury premium mountain retreats.</p>
+  </div>
+
+  <div class="row g-4 justify-content-center">
+    {% for item in categories %}
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="hotel-cat-card">
+        <div class="hotel-img-wrap">
+          {% if item.image %}
+          <img src="{{ item.image }}" alt="{{ item.category.Category }} Room" />
+          {% else %}
+          <img src="{% static 'images/Normal_home.jpg' %}" alt="{{ item.category.Category }} Room" />
+          {% endif %}
+          <span class="hotel-price-badge">NPR {{ item.min_price }} <small class="text-white opacity-75 fw-normal">/ night</small></span>
+        </div>
+        
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">{{ item.category.Category }} Rooms</h3>
+          <p class="text-muted small mb-3">
+            {% if item.category.Category == 'Normal' %}
+            Cozy and budget-friendly standard rooms equipped with essential amenities, high-speed Wi-Fi, and comfortable bedding.
+            {% elif item.category.Category == 'Delux' %}
+            Spacious deluxe accommodation featuring panoramic mountain views, attached luxury bathroom, and room dining service.
+            {% else %}
+            Executive premium suites offering royal Himalayan decor, king beds, private balcony, and complimentary breakfast.
+            {% endif %}
+          </p>
+
+          <div class="mb-4">
+            <span class="amenity-tag"><i class="fa-solid fa-wifi text-warning"></i> Fast Wi-Fi</span>
+            <span class="amenity-tag"><i class="fa-solid fa-shower text-warning"></i> Hot Shower</span>
+            <span class="amenity-tag"><i class="fa-solid fa-mountain text-warning"></i> Mountain View</span>
+            <span class="amenity-tag"><i class="fa-solid fa-utensils text-warning"></i> Breakfast</span>
+          </div>
+
+          <a href="{% url 'hms:room_seperate' Category=item.category.Category %}" class="btn-book-cat">
+            <span>View Available Rooms</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}
