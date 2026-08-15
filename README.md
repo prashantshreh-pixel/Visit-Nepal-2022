@@ -4,6 +4,8 @@
 
 **A full-stack travel guide web application for exploring Nepal — with hotel booking, a community gallery, an AI chatbot, and threaded community posts.**
 
+![Nepal Giphy GIF](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDUxZ2o0NmpzYWZnemJ3aHRmeTZoMzJ5aDJubWE2cmlpOGE3bDhpOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PjatleHkNdPP3J7brX/giphy.gif)
+
 [![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://python.org)
 [![Django](https://img.shields.io/badge/Django-3.2%2B-092E20?logo=django&logoColor=white)](https://djangoproject.com)
 [![Rasa](https://img.shields.io/badge/Rasa-3.x-5A17EE?logo=rasa&logoColor=white)](https://rasa.com)
@@ -65,6 +67,8 @@ Visit_Nepal_2022-main/
 │   └── models/                     ← Trained Rasa models (auto-generated)
 │
 ├── run_all.py                      ← One-command launcher (Django + Rasa)
+├── installme.bat                   ← One-click Windows Installer
+├── installme.sh                    ← One-click Linux/macOS Installer
 └── README.md
 ```
 
@@ -83,88 +87,57 @@ Visit_Nepal_2022-main/
 
 ---
 
-## 🚀 Setup & Installation
+## 🚀 Setup & Installation (Automated)
+
+Setting up the project is fully automated via installer scripts.
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/Visit_Nepal_2022.git
-cd Visit_Nepal_2022-main
+git clone https://github.com/prashantshreh-pixel/Visit-Nepal-2022.git
+cd Visit-Nepal-2022
 ```
 
-### 2. Set Up Django Environment
+### 2. Run the Installer
+
+#### 💻 Windows
+Double-click `installme.bat` or run:
+```cmd
+installme.bat
+```
+
+#### 🍎 macOS / 🐧 Linux
+Run:
+```bash
+chmod +x installme.sh
+./installme.sh
+```
+
+The installer script will:
+- Set up a Python virtual environment (`venv`).
+- Activate it and install dependencies from `requirements.txt`.
+- Set up the SQLite database and run Django migrations.
+
+---
+
+### 3. Run the Servers
+
+Once installed, start the local servers with:
 
 ```bash
-# Create and activate a virtual environment
-python -m venv venv
-
-# Windows
+# Activate the environment
+# Windows:
 venv\Scripts\activate
-
-# macOS / Linux
+# macOS/Linux:
 source venv/bin/activate
 
-# Install Django dependencies
-pip install django Pillow
-```
-
-### 3. Configure & Run Django
-
-```bash
-cd django_app
-
-# Apply database migrations
-python manage.py migrate
-
-# (Optional) Create a superuser for the Admin panel
-python manage.py createsuperuser
-
-# Collect static files (for production only)
-# python manage.py collectstatic
-
-# Start the development server
-python manage.py runserver
-```
-
-The Django site will be live at **http://127.0.0.1:8000**
-
----
-
-### 4. Set Up Rasa Chatbot (Optional — Separate Environment)
-
-```bash
-# It is recommended to use a separate conda environment for Rasa
-conda create -n rasa-env python=3.9
-conda activate rasa-env
-
-pip install rasa
-
-cd rasa_bot
-
-# Train the NLP model (required before first run)
-rasa train
-
-# Start the Rasa API server
-rasa run -m models --enable-api --cors "*"
-```
-
-The Rasa server will be available at **http://localhost:5005**
-
----
-
-### 5. One-Command Launch (Both Servers)
-
-If Rasa is installed in the same environment as Django, you can start both with:
-
-```bash
-# From the repository root
+# Run both servers (Django + Rasa Chatbot)
 python run_all.py
 ```
 
-This will:
-1. Start the **Rasa chatbot** server on port `5005`
-2. Start the **Django web server** on port `8000`
-3. Monitor both processes and shut down cleanly on `Ctrl+C`
+This starts:
+1. **Django web server** on **http://127.0.0.1:8000**
+2. **Rasa chatbot** server on **http://localhost:5005**
 
 ---
 
@@ -212,17 +185,6 @@ From here you can:
 | Chatbot | Rasa Open Source 3.x |
 | Media Storage | Django media files (local) |
 | Auth | Django built-in auth + session management |
-
----
-
-## 📸 Pages Overview
-
-- **Explore Nepal** — Hero cover + Swiper carousel of destinations + feature image grid
-- **Culture / Nature / Sports** — Category posts with image cards, click to view full post with comments
-- **Gallery** — Masonry photo grid, click for glassmorphic lightbox modal
-- **Hotel Rooms** — 3-column category cards → room detail + sticky booking reservation form
-- **Member Dashboard** — Profile info, booking history cards, photo upload manager
-- **Login / Register** — Full-screen animated slide-in/out panels, social auth buttons, toast alerts
 
 ---
 
