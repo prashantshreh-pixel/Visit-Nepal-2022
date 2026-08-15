@@ -1,0 +1,108 @@
+@font-face {
+  font-family: great_wishes;
+  src: url("/static/fonts/Great Wishes.otf");
+}
+
+.culture_titles, .page_titles, .Explore {
+  font-family: great_wishes, cursive !important;
+  letter-spacing: 10px !important;
+  text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6) !important;
+  opacity: 0.95;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) rotate(-25.5deg) !important;
+  -webkit-transform: translate(-50%, -50%) rotate(-25.5deg) !important;
+  color: #ffffff !important;
+  font-size: 90px !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .culture_titles, .page_titles, .Explore {
+    font-size: 60px !important;
+    letter-spacing: 6px !important;
+  }
+}
+
+.about {
+  position: relative;
+}
+
+.about h2 {
+  font-size: 18px;
+  letter-spacing: 15px;
+  text-transform: uppercase;
+}
+
+#project .project-item {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 25px;
+  padding: 0;
+  vertical-align: middle;
+  text-align: center;
+}
+
+#project .project-item .project-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: all ease-in-out 0.4s;
+}
+
+#project .project-item .project-overlay .project-info {
+  padding: 12em 0;
+}
+
+.project-info h1 {
+  color: #fff;
+  margin: 0;
+}
+
+.project-info h4 {
+  color: #d9d9d9;
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0.2;
+  margin-top: 0;
+}
+
+#project .project-item:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-item img {
+  transition: all ease-in-out 0.4s;
+}
+
+.project-item:hover img {
+  transform: scale(1.1);
+}
+
+/* Swiper styling - transparent backgrounds */
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+}
+
+.swiper-slide {
+  text-align: center;
+  background: transparent !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

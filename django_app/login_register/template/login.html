@@ -1,0 +1,481 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+<style>
+  /* ── Hide site header & scroll controls on auth pages ── */
+  header.transparent-header,
+  .scroll-controls-container {
+    display: none !important;
+  }
+
+  /* ── Reset body so nothing leaks around the canvas ── */
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    background: #000000;
+  }
+
+  /* ── Full-screen two-panel container ── */
+  .auth-full-canvas {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #000000;
+  }
+
+  /* ── Back Button: positioned top-left, switches to dark in register mode ── */
+  .auth-back-btn {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .auth-back-btn:hover {
+    background: #ff9800 !important;
+    color: #121212 !important;
+    transform: scale(1.1);
+    border-color: #ff9800 !important;
+  }
+
+  /* Dark back button in register mode (since left side is white) */
+  .auth-full-canvas.register-mode .auth-back-btn,
+  .auth-back-btn.dark-mode-btn {
+    background: rgba(20, 20, 20, 0.85) !important;
+    color: #ffffff !important;
+    border-color: rgba(20, 20, 20, 0.2) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  /* ─────────────────────────────────────────
+     IMAGE HALF — always 50% of screen
+  ───────────────────────────────────────── */
+  .auth-image-half {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: url("{% static 'images/login.jpg' %}") center / cover no-repeat;
+    transition: transform 0.65s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem;
+    color: #ffffff;
+  }
+
+  /* overlay gradient for high readability */
+  .auth-image-half::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.2) 60%);
+    pointer-events: none;
+  }
+
+  .auth-image-half .brand-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* When register mode: image slides to the RIGHT half */
+  .auth-full-canvas.register-mode .auth-image-half {
+    transform: translateX(100%);
+    background-image: url("{% static 'images/naya.jpg' %}");
+  }
+
+  /* ─────────────────────────────────────────
+     FORM HALVES — each 50%, stacked on right/left
+  ───────────────────────────────────────── */
+  .form-half {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1.5rem;
+    background: #ffffff;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Professional, non-stretched form width */
+  .form-inner {
+    width: 100%;
+    max-width: 380px;
+    margin: auto 0;
+  }
+
+  /* Login form sits on RIGHT (left: 50%) */
+  .login-form-half {
+    right: 0;
+    left: 50%;
+    opacity: 1;
+    z-index: 5;
+  }
+
+  /* Register form sits on LEFT (left: 0) */
+  .register-form-half {
+    left: 0;
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* register mode: show register form (left side), hide login */
+  .auth-full-canvas.register-mode .login-form-half {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .auth-full-canvas.register-mode .register-form-half {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ─── Form Typography & Fields ─── */
+  .auth-main-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    color: #121212;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+  }
+
+  .auth-sub-link {
+    font-size: 0.88rem;
+    color: #666666;
+    margin-bottom: 1.4rem;
+  }
+
+  .auth-sub-link a {
+    color: #121212 !important;
+    font-weight: 700;
+    text-decoration: underline !important;
+    cursor: pointer;
+  }
+
+  .field-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+
+  .pill-input-box {
+    position: relative;
+    margin-bottom: 0.85rem;
+  }
+
+  .pill-input {
+    width: 100%;
+    padding: 10px 18px;
+    border: 1.5px solid #dcdcdc;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #ffffff;
+    color: #121212;
+  }
+
+  .pill-input:focus {
+    border-color: #121212;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .pwd-eye {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #777777;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+
+  .forgot-link {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #121212 !important;
+    text-decoration: underline !important;
+    margin-top: -0.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .btn-black-pill {
+    width: 100%;
+    padding: 12px;
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-black-pill:hover {
+    background: #222222;
+    transform: translateY(-1px);
+  }
+
+  .terms-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #444444;
+    margin-top: 0.7rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .terms-check a {
+    color: #121212 !important;
+    font-weight: 700;
+    text-decoration: underline !important;
+  }
+
+  .or-divider {
+    display: flex;
+    align-items: center;
+    color: #bbbbbb;
+    font-size: 0.8rem;
+    margin: 0.85rem 0;
+  }
+
+  .or-divider::before, .or-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .or-divider span { padding: 0 12px; }
+
+  .social-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 0.2rem;
+  }
+
+  .social-btn {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 25px;
+    background: #ffffff;
+    color: #374151;
+    font-size: 0.84rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+  }
+
+  .social-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+</style>
+
+<div class="auth-full-canvas {% if request.path == '/register/' %}register-mode{% endif %}" id="authCanvas">
+
+  <!-- ── Back to Home Button (inside canvas for accurate contextual styling) ── -->
+  <a href="{% url 'explore' %}" class="auth-back-btn {% if request.path == '/register/' %}dark-mode-btn{% endif %}" id="authBackBtn" title="Back to Visit Nepal">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+
+  <!-- ── Image Panel (slides left ↔ right) ── -->
+  <div class="auth-image-half" id="authImageHalf">
+    <div class="brand-content">
+      <i class="fa-solid fa-mountain-sun fs-2"></i>
+    </div>
+    <div class="brand-content">
+      <h2 class="fw-bold mb-1" id="overlayTitle">Visit Nepal 2022</h2>
+      <p class="small opacity-75 mb-0" id="overlaySubtitle">
+        Discover ancient cultures, vibrant nature, and extraordinary Himalayan adventures.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── LOGIN FORM — right half ── -->
+  <div class="form-half login-form-half">
+    <div class="form-inner">
+      <h1 class="auth-main-title">Log in</h1>
+      <p class="auth-sub-link">
+        Don't have an account? <a id="btnToRegister">Create an Account</a>
+      </p>
+
+      <form method="POST" action="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next|urlencode }}{% endif %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}" />
+        <label class="field-label">Username or Email</label>
+        <div class="pill-input-box">
+          <input type="text" name="username" class="pill-input" placeholder="Enter your username" required />
+        </div>
+
+        <label class="field-label">Password</label>
+        <div class="pill-input-box">
+          <input type="password" name="password" id="loginPwd" class="pill-input" placeholder="Password" required />
+          <button type="button" class="pwd-eye" onclick="togglePwd('loginPwd',this)">
+            <i class="fa-solid fa-eye-slash"></i>
+          </button>
+        </div>
+
+        <a href="#" class="forgot-link">Forgot Password?</a>
+        <button type="submit" class="btn-black-pill">Log in</button>
+
+        <div class="terms-check">
+          <input type="checkbox" id="lTerms" checked required />
+          <label for="lTerms">I agree to the <a href="#">Terms & Condition</a></label>
+        </div>
+
+        <div class="or-divider"><span>or</span></div>
+
+        <div class="social-row">
+          <button type="button" class="social-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+            </svg>
+            <span>Google</span>
+          </button>
+          <button type="button" class="social-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span>Facebook</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── REGISTER FORM — left half ── -->
+  <div class="form-half register-form-half">
+    <div class="form-inner">
+      <h1 class="auth-main-title">Create an Account</h1>
+      <p class="auth-sub-link">
+        Already have an account? <a id="btnToLogin">Log in here</a>
+      </p>
+
+      <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        <div class="row g-2">
+          <div class="col-6">
+            <label class="field-label">First Name</label>
+            <div class="pill-input-box"><input type="text" name="first_name" class="pill-input" placeholder="First" required /></div>
+          </div>
+          <div class="col-6">
+            <label class="field-label">Last Name</label>
+            <div class="pill-input-box"><input type="text" name="last_name" class="pill-input" placeholder="Last" required /></div>
+          </div>
+        </div>
+
+        <label class="field-label">Username</label>
+        <div class="pill-input-box"><input type="text" name="username" class="pill-input" placeholder="Username" required /></div>
+
+        <label class="field-label">Email Address</label>
+        <div class="pill-input-box"><input type="email" name="email" class="pill-input" placeholder="Email" required /></div>
+
+        <div class="row g-2">
+          <div class="col-6">
+            <label class="field-label">Password</label>
+            <div class="pill-input-box"><input type="password" name="password1" class="pill-input" placeholder="Password" required /></div>
+          </div>
+          <div class="col-6">
+            <label class="field-label">Confirm Password</label>
+            <div class="pill-input-box"><input type="password" name="password2" class="pill-input" placeholder="Confirm" required /></div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-black-pill mt-1">Register</button>
+
+        <div class="terms-check">
+          <input type="checkbox" id="rTerms" checked required />
+          <label for="rTerms">I agree to the <a href="#">Terms & Condition</a></label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const authCanvas = document.getElementById('authCanvas');
+  const authBackBtn = document.getElementById('authBackBtn');
+  const imgHalf    = document.getElementById('authImageHalf');
+  const oTitle     = document.getElementById('overlayTitle');
+  const oSubtitle  = document.getElementById('overlaySubtitle');
+
+  document.getElementById('btnToRegister').addEventListener('click', e => {
+    e.preventDefault();
+    authCanvas.classList.add('register-mode');
+    authBackBtn.classList.add('dark-mode-btn');
+    imgHalf.style.backgroundImage = "url('{% static 'images/naya.jpg' %}')";
+    oTitle.textContent    = 'Join Visit Nepal 2022';
+    oSubtitle.textContent = 'Create an account to book hotels and share your travel photos.';
+    history.pushState(null, '', '/register/');
+  });
+
+  document.getElementById('btnToLogin').addEventListener('click', e => {
+    e.preventDefault();
+    authCanvas.classList.remove('register-mode');
+    authBackBtn.classList.remove('dark-mode-btn');
+    imgHalf.style.backgroundImage = "url('{% static 'images/login.jpg' %}')";
+    oTitle.textContent    = 'Visit Nepal 2022';
+    oSubtitle.textContent = 'Discover ancient cultures, vibrant nature, and extraordinary Himalayan adventures.';
+    history.pushState(null, '', '/login/');
+  });
+
+  function togglePwd(id, btn) {
+    const inp = document.getElementById(id);
+    const ico = btn.querySelector('i');
+    if (inp.type === 'password') { inp.type = 'text';     ico.className = 'fa-solid fa-eye'; }
+    else                         { inp.type = 'password'; ico.className = 'fa-solid fa-eye-slash'; }
+  }
+</script>
+{% endblock content %}

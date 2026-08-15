@@ -1,0 +1,81 @@
+/* Adding new font */
+@font-face {
+  font-family: PTSans-BoldItalic;
+  src: url("/static/fonts/PTSans-BoldItalicttff");
+}
+@font-face {
+  font-family: great_wishes;
+  src: url("/static/fonts/Great Wishes.otf");
+}
+
+/* Universal reset */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Remove all underlines globally from links */
+a {
+  text-decoration: none !important;
+}
+
+/* Big cursive font title on cover pages */
+.Explore, .culture_titles, .page_titles {
+  font-family: great_wishes, cursive !important;
+  letter-spacing: 10px !important;
+  text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6) !important;
+  opacity: 0.95;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) rotate(-25.5deg) !important;
+  -webkit-transform: translate(-50%, -50%) rotate(-25.5deg) !important;
+  color: #ffffff !important;
+  font-size: 90px !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .Explore, .culture_titles, .page_titles {
+    font-size: 60px !important;
+    letter-spacing: 6px !important;
+  }
+}
+
+/* Styling Navigation bar */
+.navbar .navbar-brand {
+  font-family: "PT Sans", sans-serif;
+  font-weight: bold;
+  font-size: 2.2rem;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.navbar .navbar-nav .nav-link {
+  font-family: "PT Sans", sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+  background: transparent;
+  color: #ff9800 !important;
+  text-decoration: none !important;
+}
+
+/* Remove underline lines */
+.navbar .navbar-nav .nav-link::after {
+  display: none !important;
+}

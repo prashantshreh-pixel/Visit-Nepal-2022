@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* ─── Hero Cover (Matches culture.html, natural.html, sport.html) ─── */
+  #background {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 60%, var(--bg-body) 100%), url("/static/images/base.jpeg");
+    height: 100vh;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+  }
+
+  .Explore {
+    font-family: great_wishes, cursive;
+    letter-spacing: 12px;
+    text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25.5deg);
+    -webkit-transform: translate(-50%, -50%) rotate(-25.5deg);
+    color: white;
+    font-weight: bold;
+    font-size: 100px;
+    text-align: center;
+    width: 100%;
+    z-index: 10;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  /* ─── About Section ─── */
+  .about-section {
+    padding: 5rem 0 2rem;
+    background: var(--bg-body);
+  }
+
+  .about-section .accent-label {
+    font-size: 0.9rem;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--primary-accent);
+    font-weight: 700;
+  }
+
+  /* ─── Compact Feature Rows ─── */
+  .feature-row {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .feature-row.reverse {
+    flex-direction: row-reverse;
+  }
+
+  .feature-img-wrap {
+    flex: 0 0 320px;
+    width: 320px;
+    height: 280px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .feature-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 20px;
+    transition: transform 0.4s ease;
+  }
+
+  .feature-img-wrap:hover img {
+    transform: scale(1.06);
+  }
+
+  .feature-text {
+    flex: 1;
+  }
+
+  .feature-text .category-label {
+    color: var(--primary-accent);
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .feature-text h3 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .feature-text p {
+    color: var(--text-muted);
+    line-height: 1.75;
+    font-size: 0.97rem;
+  }
+
+  @media (max-width: 768px) {
+    .feature-row, .feature-row.reverse { flex-direction: column; }
+    .feature-img-wrap { flex: none; width: 100%; height: 220px; }
+  }
+
+  /* ─── Carousel Section ─── */
+  .facts-carousel-wrapper {
+    padding: 4rem 0 5rem;
+    background: var(--bg-body);
+  }
+
+  .swiper-outer-container {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  #factsSwiper {
+    width: 100%;
+    overflow: hidden;
+    padding: 12px 4px;
+  }
+
+  .carousel-card-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .carousel-img-wrapper {
+    width: 100%;
+    height: 240px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    background: transparent !important;
+  }
+
+  .carousel-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 18px;
+    transition: transform 0.4s ease;
+  }
+
+  .carousel-card-item:hover .carousel-img-wrapper img {
+    transform: scale(1.06);
+  }
+
+  .carousel-label {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-align: center;
+  }
+
+  /* Navigation Buttons outside carousel */
+  .swiper-btn {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    background: rgba(20, 20, 20, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ff9800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  .swiper-btn-prev { left: 8px; }
+  .swiper-btn-next { right: 8px; }
+
+  .swiper-btn:hover {
+    background: #ff9800;
+    color: #121212;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  /* ─── Bottom Text ─── */
+  .bottom-banner {
+    padding: 4rem 0;
+    background: var(--bg-body);
+  }
+</style>
+
+<!-- Hero Cover Section -->
+<div id="background">
+  <h1 class="Explore">Explore Nepal.</h1>
+</div>
+
+<!-- About Section -->
+<section class="about-section">
+  <div class="container">
+    <div class="text-center mb-5 col-md-9 mx-auto">
+      <span class="accent-label">Once is Not Enough</span>
+      <h2 class="fw-bold mt-2 mb-3" style="color: var(--text-color);">Discover the Land of the Himalayas</h2>
+      <p class="text-muted fs-5">
+        Nepal is a land blessed with extraordinary natural beauty and centuries-old cultural heritage — from majestic mountain summits to serene lakes and vibrant traditions.
+      </p>
+    </div>
+
+    <!-- Feature rows -->
+    <div class="feature-row">
+      <div class="feature-img-wrap">
+        <img src="{% static 'images/buddha3.jfif' %}" alt="Nepali Culture" />
+      </div>
+      <div class="feature-text">
+        <span class="category-label">Culture</span>
+        <h3>Diversity in Culture & Heritage</h3>
+        <p>
+          Nepalese culture is a vibrant tapestry of Hinduism, Buddhism, and rich ethnic traditions — celebrated through year-round festivals, sacred stupas, ancient artwork, and warm hospitality.
+        </p>
+      </div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="feature-img-wrap">
+        <img src="{% static 'images/himal.jpg' %}" alt="Natural Beauty" />
+      </div>
+      <div class="feature-text">
+        <span class="category-label">Nature</span>
+        <h3>Rich in Natural Wonders</h3>
+        <p>
+          Home to 8 of the world's 10 highest peaks, Nepal draws nature lovers to its pristine alpine lakes, lush jungles in Chitwan, and dramatic mountain landscapes.
+        </p>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-img-wrap">
+        <img src="{% static 'images/bunjee.jpg' %}" alt="Adventure Sports" />
+      </div>
+      <div class="feature-text">
+        <span class="category-label">Sports & Adventure</span>
+        <h3>Daring Adventures to Experience</h3>
+        <p>
+          For thrill-seekers: high-altitude trekking, white-water rafting, bungee jumping over deep gorges, paragliding over Phewa Lake, and jungle safari expeditions.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Carousel -->
+<section class="facts-carousel-wrapper">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold" style="color: var(--text-color);">Check Out Other Interesting Facts</h2>
+      <p class="text-muted">Remarkable highlights of Nepal's wildlife and heritage</p>
+    </div>
+    <div class="swiper-outer-container">
+      <div id="factsSwiper" class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="carousel-card-item">
+              <div class="carousel-img-wrapper"><img src="{% static 'images/helicopter.jpg' %}" alt="Himalayan Flights" /></div>
+              <div class="carousel-label">Himalayan Flights & Paragliding</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="carousel-card-item">
+              <div class="carousel-img-wrapper"><img src="{% static 'images/rhino2.jpg' %}" alt="One Horned Rhino" /></div>
+              <div class="carousel-label">Asiatic One-Horned Rhino</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="carousel-card-item">
+              <div class="carousel-img-wrapper"><img src="{% static 'images/polo-re.jpg' %}" alt="Elephant Polo" /></div>
+              <div class="carousel-label">Elephant Polo Tournaments</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="carousel-card-item">
+              <div class="carousel-img-wrapper"><img src="{% static 'images/mt2.jpg' %}" alt="Mount Everest" /></div>
+              <div class="carousel-label">Mount Everest (Sagarmatha)</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="carousel-card-item">
+              <div class="carousel-img-wrapper"><img src="{% static 'images/kumari.jpg' %}" alt="Living Goddess Kumari" /></div>
+              <div class="carousel-label">Living Goddess (Kumari)</div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="carousel-card-item">
+              <div class="carousel-img-wrapper"><img src="{% static 'images/snow_leopard.jpg' %}" alt="Snow Leopard" /></div>
+              <div class="carousel-label">Elusive Snow Leopard</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-btn swiper-btn-prev" id="swPrev"><i class="fa-solid fa-chevron-left"></i></div>
+      <div class="swiper-btn swiper-btn-next" id="swNext"><i class="fa-solid fa-chevron-right"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- Bottom Banner -->
+<div class="bottom-banner">
+  <div class="container">
+    <div class="col-lg-7 mx-auto text-center">
+      <h5 class="fw-bold text-uppercase mb-3" style="color: var(--primary-accent);">This is Nepal</h5>
+      <hr class="w-25 mx-auto mb-4" style="border-top: 2px solid var(--primary-accent);" />
+      <p class="lead" style="color: var(--text-muted); line-height: 1.8;">
+        Nepal boasts sheer diversity — from steamy tropical jungles in the Terai to the icy peaks of the world's highest mountains. Trekking, wildlife safaris, ancient monuments, and heartwarming Nepalese smiles await you.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  new Swiper('#factsSwiper', {
+    slidesPerView: 1,
+    spaceBetween: 24,
+    loop: true,
+    autoplay: { delay: 2800, disableOnInteraction: false },
+    navigation: { nextEl: '#swNext', prevEl: '#swPrev' },
+    breakpoints: {
+      600:  { slidesPerView: 2, spaceBetween: 20 },
+      1000: { slidesPerView: 3, spaceBetween: 24 }
+    }
+  });
+});
+</script>
+{% endblock content %}
